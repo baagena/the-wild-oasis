@@ -1,5 +1,6 @@
 function App() {
-  return <div>App</div>;
+  const x = 12;
+  return <div>Hello world</div>;
 }
 
 export default App;
