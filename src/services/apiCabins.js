@@ -23,7 +23,7 @@ const {data, error } = await supabase
 if(error)
      {
      console.error(error);
-     throw new Error("Cabin could not be loaded")
+     throw new Error("Cabin could not be deleted")
      }
      
      return data;
