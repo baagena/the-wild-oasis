@@ -8,8 +8,23 @@ export async function  getCabins() {
 if(error)
 {
     console.error(error);
-    throw new Error("No cabins found")
+    throw new Error("Cabin could not be loaded")
 }
 
+     return data;
+}
+
+export async function deleteCabin(id) {
+     
+const {data, error } = await supabase
+.from('cabins')
+.delete()
+.eq('id', id)
+if(error)
+     {
+     console.error(error);
+     throw new Error("Cabin could not be loaded")
+     }
+     
      return data;
 }
