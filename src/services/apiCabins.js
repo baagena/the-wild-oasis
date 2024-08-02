@@ -18,6 +18,7 @@ if(error)
 
 export async function createEditCabin(newCabin, id) {
      console.log(id)
+     console.log(newCabin)
 const hasImagePath = newCabin.image?.startsWith?.(supabaseUrl)
 // https://jnyumtavqjuqlgpqushg.supabase.co/storage/v1/object/public/cabin-images/cabin-001.jpg?t=2024-07-30T08%3A19%3A22.117Z
 // 1.Create cabin
@@ -27,15 +28,16 @@ const imagePath = hasImagePath ? newCabin.image : `${supabaseUrl}/storage/v1/obj
 // Create Edit Cabin
 let query = supabase.from('cabins');
 // A. Create Cabin
-if(!id) query = query.insert([{...newCabin, image: imagePath}])
+if(!id) query = query.insert([{ ...newCabin, image: imagePath}])
 
 // B. Edit Cabin
-if(id)
-    query= query.update({...newCabin, image: imagePath})
-  .eq('id', id)
+if(id) 
+     query = query.update({ ...newCabin, image: imagePath})
+     .eq('id', id)
 
 
-const { data, error } = await query.select().single();
+const { data, error } = await query.select();
+
 if(error)
      {
      console.error(error);
