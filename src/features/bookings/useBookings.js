@@ -15,11 +15,13 @@ export function useBookings() {
 
     const sortBy = {field,direction}
     
+    // 3) PAGE
+    const page = searchParams.get("page") || 1;
 
-   const {isLoading, data: bookings, error} =  useQuery({
+   const { isLoading, data: { data:bookings, count } = {}, error } =  useQuery({
         queryKey: ["bookings", filter,sortBy],
-        queryFn: () => getBookings({filter, sortBy})
+        queryFn: () => getBookings({filter, sortBy, page})
     })
 
-    return {isLoading, bookings, error}
+    return {isLoading, bookings, error,count}
 }
