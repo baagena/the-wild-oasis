@@ -9,10 +9,14 @@ import { formatDistanceFromNow } from "../../utils/helpers";
 import Menus from "../../ui/Menus";
 import {
   HiArrowDownOnSquare,
+  HiArrowUpOnSquare,
   HiEllipsisVertical,
   HiEye,
 } from "react-icons/hi2";
 import { Navigate, useNavigate } from "react-router-dom";
+import Modal from "../../ui/Modal";
+import ConfirmCheckout from "../../ui/ConfirmCheckout";
+import { useCheckout } from "../check-in-out/useCheckOut";
 
 const Cabin = styled.div`
   font-size: 1.6rem;
@@ -60,8 +64,13 @@ function BookingRow({
     "checked-in": "green",
     "checked-out": "silver",
   };
+  const { checkout, isLoadingCheckout } = useCheckout();
 
   const navigate = useNavigate();
+
+  function handleCheckout(id) {
+    checkout(id);
+  }
 
   return (
     <Table.Row>
@@ -88,6 +97,7 @@ function BookingRow({
       <Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
 
       <Amount>{formatCurrency(totalPrice)}</Amount>
+
       <Menus.Menu>
         <Menus.Toggle id={bookingId}>
           <HiEllipsisVertical />
@@ -105,6 +115,14 @@ function BookingRow({
               onClick={() => navigate(`/checkin/${bookingId}`)}
             >
               Check in
+            </Menus.Button>
+          )}
+          {status === "checked-in" && (
+            <Menus.Button
+              icon={<HiArrowUpOnSquare />}
+              onClick={() => handleCheckout(bookingId)}
+            >
+              Check out
             </Menus.Button>
           )}
         </Menus.List>
