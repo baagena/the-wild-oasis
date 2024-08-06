@@ -12,10 +12,9 @@ import {
   HiArrowUpOnSquare,
   HiEllipsisVertical,
   HiEye,
+  HiTrash,
 } from "react-icons/hi2";
-import { Navigate, useNavigate } from "react-router-dom";
-import Modal from "../../ui/Modal";
-import ConfirmCheckout from "../../ui/ConfirmCheckout";
+import { useNavigate } from "react-router-dom";
 import { useCheckout } from "../check-in-out/useCheckOut";
 
 const Cabin = styled.div`
@@ -68,10 +67,6 @@ function BookingRow({
 
   const navigate = useNavigate();
 
-  function handleCheckout(id) {
-    checkout(id);
-  }
-
   return (
     <Table.Row>
       <Cabin>{cabinName}</Cabin>
@@ -120,11 +115,17 @@ function BookingRow({
           {status === "checked-in" && (
             <Menus.Button
               icon={<HiArrowUpOnSquare />}
-              onClick={() => handleCheckout(bookingId)}
+              onClick={() => checkout(bookingId)}
             >
               Check out
             </Menus.Button>
           )}
+          <Menus.Button
+            icon={<HiTrash />}
+            onClick={() => handleDelete(bookingId)}
+          >
+            Delete
+          </Menus.Button>
         </Menus.List>
       </Menus.Menu>
     </Table.Row>
