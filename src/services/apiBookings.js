@@ -11,7 +11,6 @@ export async function getBookings({filter,sortBy,page}) {
   if(sortBy)  query = query.order(sortBy.field, {ascending: sortBy.direction === "asc"})
     const from = (page - 1) * PAGE_SIZE;
   const to = (from + PAGE_SIZE) - 1;
-  console.log(typeof page)
   if(page) query = query.range(from, to)
   const {data, error, count} = await query;
   if(error) {
